@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.briup.apps.poll.dao.extend.QuestionVMMapper">
+	<select id="selectAll" resultMap="QuestionVMResultMap">
+		select * from poll_question
+		<!-- id name questionType -->
+	</select>
+	
+	<select id="selectById" resultMap="QuestionVMResultMap">
+ 		select * from poll_question where id = #{id}
+ 		<!-- id,name,description -->
+   </select>
+   
+   <select id="query" resultMap="QuestionVMResultMap">
+ 		select * from poll_question where name like "%"#{name}"%"
+ 		<!-- id,name,description -->
+   </select>
+
+	<select id="slectAllQuestion" parameterType="long"
+		resultMap="QuestionVMResultMap">
+		select * from poll_question where id in (select question_id
+		from poll_qq where questionnaire_id = #{id})
+	</select>
+	
+	<!-- 定义结果集 -->
+	<resultMap id="QuestionVMResultMap" type="com.briup.apps.poll.bean.extend.QuestionVM">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="questionType" property="questionType" />
+		<collection column="id" property="options" javaType="ArrayList"
+			ofType="com.briup.apps.poll.bean.Options" select="selectOptionsByQuestionId">
+		</collection>
+	</resultMap>
+	<!-- 选项结果集映射 -->
+	<resultMap id="OptionsMap" type="com.briup.apps.poll.bean.Options">
+		<result column="question_id" property="questionId" />
+	</resultMap>
+
+	<!-- 通过题目id查询属于该题目的选项信息 -->
+	<select id="selectOptionsByQuestionId" parameterType="long"
+		resultMap="OptionsMap">
+		select * from poll_options where question_id=#{id}
+	</select>
+
+
+
+
+</mapper>

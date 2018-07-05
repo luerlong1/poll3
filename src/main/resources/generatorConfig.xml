@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<!-- mybatis-generator的核心配置文件 -->
+<generatorConfiguration>
+  <classPathEntry location="F:\briup\repository\mysql\mysql-connector-java\5.1.46\mysql-connector-java-5.1.46.jar" />
+
+  <context id="DB2Tables" targetRuntime="MyBatis3">
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+        connectionURL="jdbc:mysql://127.0.0.1:3306/poll2.0"
+        userId="root"
+        password="root">
+    </jdbcConnection>
+
+	<!--指定生成的类型为java类型，避免数据库中number等类型字段 -->
+    <javaTypeResolver >
+      <property name="forceBigDecimals" value="false" />
+    </javaTypeResolver>
+
+	<!--自动生成的实体的存放包路径 -->
+    <javaModelGenerator targetPackage="com.briup.apps.poll.bean" targetProject="./src/main/java">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+
+	<!--自动生成的*Mapper.xml文件存放路径 -->
+    <sqlMapGenerator targetPackage="mapper"  targetProject="./src/main/resources">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+
+	<!--自动生成的*Mapper.java存放路径 -->
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.briup.apps.poll.dao"  targetProject="./src/main/java">
+      <property name="enableSubPackages" value="true" />
+    </javaClientGenerator>
+
+	<!-- 映射配置 -->
+	 
+	<table tableName="poll_survey" domainObjectName="Survey" ></table>
+	
+    <!-- <table tableName="poll_school" domainObjectName="School" ></table>
+    <table tableName="poll_grade" domainObjectName="Grade" ></table>
+    <table tableName="poll_clazz" domainObjectName="Clazz" ></table>
+    <table tableName="poll_course" domainObjectName="Course" ></table>
+    <table tableName="poll_user" domainObjectName="User" ></table>
+	<table tableName="poll_options" domainObjectName="Options" ></table>
+    <table tableName="poll_question" domainObjectName="Question" ></table>
+    <table tableName="poll_questionnaire" domainObjectName="Questionnaire" ></table>
+    <table tableName="poll_qq" domainObjectName="Qq" ></table>
+    <table tableName="poll_answers" domainObjectName="Answers" ></table> -->
+    
+  </context>
+</generatorConfiguration>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.briup.apps.poll.dao.extend.SurveyVMMapper">
+
+
+ <resultMap id="SurveyVMBaseResultMap" type="com.briup.apps.poll.bean.extend.SurveyVM">
+      <id column="id" property="id"/>
+      <result column="average" property="average"/>
+      <result column="status" property="status"/>
+      <result column="code" property="code"/>
+      <result column="surveyDate" property="surveyDate"/>
+      		
+      <association 
+          column="course_id" 
+          property="course" 
+          select="com.briup.apps.poll.dao.CourseMapper.selectByPrimaryKey">
+      </association>
+      
+      <association 
+           column="clazz_id"
+           property="clazzVM"
+           select="com.briup.apps.poll.dao.extend.ClazzVMMapper.selectAllClazz">
+      </association>
+      
+      <association 
+           column="user_id"
+           property="user"
+           select="com.briup.apps.poll.dao.UserMapper.selectByPrimaryKey">
+      </association>
+
+  </resultMap>
+
+ <resultMap extends="SurveyVMBaseResultMap" id="SurveyVMResultMap" type="com.briup.apps.poll.bean.extend.SurveyVM">
+  
+      <association 
+           column="questionnaire_id"
+           property="questionnaireVM"
+           select="com.briup.apps.poll.dao.extend.QuestionnaireVMMapper.selectAllquestionnaireVM">
+      </association>
+  </resultMap>
+
+  <select id="selectAll" resultMap="SurveyVMResultMap">
+       select * from poll_survey
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="SurveyVMResultMap" parameterType="long">
+      select * from poll_survey where id=#{id}
+  </select>
+    <select id="selectByClazzIdAndCheckPass" resultMap="SurveyVMBaseResultMap" parameterType="long">
+      select * from poll_survey where clazz_id=#{id} and status='审核成功'
+  </select>
+  
+</mapper>

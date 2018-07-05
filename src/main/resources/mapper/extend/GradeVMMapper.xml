@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.briup.apps.poll.dao.extend.GradeVMMapper">
+ 
+   <resultMap id="GradeVMResultMap" type="com.briup.apps.poll.bean.extend.GradeVM">
+      <id column="id" property="id"/>
+      <result column="name" property="name"/>
+      <result column="description" property="description"/>
+      <association 
+          column="school_id" 
+          property="school" 
+          select="com.briup.apps.poll.dao.SchoolMapper.selectByPrimaryKey">
+      </association>
+  </resultMap>
+ 
+ 
+ 
+  <select id="selectAll" resultMap="GradeVMResultMap">
+       select * from poll_grade
+  </select>
+  
+  
+  
+  <select id="selectById" resultMap="GradeVMResultMap">
+       select * from poll_grade where id = #{id}
+  </select>
+  
+  
+   <select id="query" resultMap="GradeVMResultMap">
+       select * from poll_grade where name like "%"#{name}"%"
+  </select>
+  
+</mapper>
